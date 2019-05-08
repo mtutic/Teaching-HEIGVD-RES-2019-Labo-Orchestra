@@ -81,4 +81,5 @@ if (process.argv.length < 3) {
   throw new Error('Number of arguments is not correct');
 }
 
+// eslint-disable-next-line no-unused-vars
 const m1 = new Musician(listInstruments[process.argv[2]]);
