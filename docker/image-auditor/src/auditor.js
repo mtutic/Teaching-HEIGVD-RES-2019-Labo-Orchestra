@@ -76,5 +76,5 @@ server.on('connection', (socket) => {
   });
 
   // Send active musicians and close the socket
-  socket.end(JSON.stringify(payload));
+  socket.end(JSON.stringify(payload, null, 4));
 });
