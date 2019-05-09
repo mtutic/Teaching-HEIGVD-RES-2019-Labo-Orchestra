@@ -1,7 +1,7 @@
 # Logs
 logs
 *.log
-npm-debug.log*
+napm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
@@ -42,8 +42,14 @@ typings/
 # Optional npm cache directory
 .npm
 
+# npm package-lock
+**/package-lock.json
+
 # Optional eslint cache
 .eslintcache
+
+# Eslint
+**/.eslintrc
 
 # Optional REPL history
 .node_repl_history
@@ -57,3 +63,8 @@ typings/
 # dotenv environment variables file
 .env
 
+# VisualStudioCode
+.vscode/*
+
+# VisualStudioCode Patch
+.history
