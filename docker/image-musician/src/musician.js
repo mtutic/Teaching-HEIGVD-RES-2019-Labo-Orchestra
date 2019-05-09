@@ -1,37 +1,27 @@
-/*
- This program simulates someone who plays an instrument in an orchestra.
- When the app is started, it is assigned an instrument (piano, flute, etc.).
- As long as it is running, every second it will emit a sound
- (well... simulate the emission of a sound: we are talking about a communication protocol).
- Of course, the sound depends on the instrument.
-
- Usage: node musician.js instrument
-*/
-
 /**
- * Let's define protocol properties
- */
-const PROTOCOL_PORT = 2525;
-const PROTOCOL_MULTICAST_ADDRESS = 'localhost';
+ * This program simulates someone who plays an instrument in an orchestra.
+ * When the app is started, it is assigned an instrument (piano, flute, etc.).
+ * As long as it is running, every second it will emit a sound
+ * (well... simulate the emission of a sound: we are talking about a communication protocol).
+ * Of course, the sound depends on the instrument.
 
-/**
- * We use a standard Node.js module to work with UDP
+ * Usage: node musician.js instrument
  */
+
+// Protocol properties
+const PROTOCOL_PORT = 2205;
+const PROTOCOL_MULTICAST_ADDRESS = '239.255.22.5';
+
+// We use a standard Node.js module to work with UDP
 const dgram = require('dgram');
 
-/**
- * We use npm package for generating unique id
- */
+// We use npm package for generating unique id
 const uuid = require('uuid/v1');
 
-/**
- * Let's create a datagram socket. We will use it to send our UDP datagrams
- */
+// Let's create a datagram socket. We will use it to send our UDP datagrams
 const s = dgram.createSocket('udp4');
 
-/**
- * List of available instruments with their sound
- */
+// List of available instruments with their sound
 const listInstruments = {
   piano: 'ti-ta-ti',
   trumpet: 'pouet',
@@ -44,8 +34,10 @@ const listInstruments = {
  * Let's define a javascript class for our musician. The constructor accepts
  * an instrument sdthat will be played by the musician
  */
-function Musician(instrumentSound) {
-  this.instrumentSound = instrumentSound;
+function Musician(instrument) {
+  this.instrument = instrument;
+  const instrumentSound = listInstruments[instrument];
+  const id = uuid();
 
   /**
    * We will simulate the musician who plays his instrument. That is something that
@@ -53,8 +45,9 @@ function Musician(instrumentSound) {
    */
   Musician.prototype.update = function update() {
     const soundEmit = {
+      uuid: id,
+      instrument: this.instrument,
       sound: instrumentSound,
-      uuid: uuid(),
     };
     const payload = JSON.stringify(soundEmit);
 
@@ -67,19 +60,15 @@ function Musician(instrumentSound) {
       console.log(`Sending payload: ${payload} via port ${s.address().port}`);
     });
   };
-
-  /**
-   * Let's take and send a sound every 1000 ms
-   */
-  setInterval(this.update.bind(this), 1000);
 }
 
-/**
- * Let's get the musician properties from the command line attributes
- */
+// Let's get the musician properties from the command line attributes
 if (process.argv.length < 3) {
   throw new Error('Number of arguments is not correct');
 }
+// TODO Check that specified instrument exists
 
-// eslint-disable-next-line no-unused-vars
-const m1 = new Musician(listInstruments[process.argv[2]]);
+const m1 = new Musician(process.argv[2]);
+
+// Let's take and send a sound every 1000 ms
+setInterval(m1.update.bind(m1), 1000);
