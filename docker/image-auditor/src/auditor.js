@@ -56,7 +56,7 @@ s.on('message', (msg, source) => {
 
 // Let's create a new TCP server and start listening for connections
 const server = net.createServer();
-server.listen(PROTOCOL_PORT, 'localhost', () => {
+server.listen(PROTOCOL_PORT, '0.0.0.0', () => {
   console.log(`[TCP] - Server is running on port ${PROTOCOL_PORT}.`);
 });
 
@@ -76,5 +76,7 @@ server.on('connection', (socket) => {
   });
 
   // Send active musicians and close the socket
-  socket.end(JSON.stringify(payload, null, 4));
+  socket.write(JSON.stringify(payload, null, 4));
+  socket.write('\r\n');
+  socket.end();
 });

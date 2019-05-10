@@ -6,10 +6,10 @@
 #
 echo ""
 echo ""
-echo "*** Killing all running containers"
+echo "*** Killing all running containers except one that I use"
 echo ""
-docker kill $(docker ps -a -q)
-docker rm $(docker ps -a -q)
+docker kill $(docker ps -a | grep -v "valgrind" | awk 'NR>1 {print $1}')
+docker rm $(docker ps -a | grep -v "valgrind" | awk 'NR>1 {print $1}')
 
 #
 # Let's get rid of existing images...

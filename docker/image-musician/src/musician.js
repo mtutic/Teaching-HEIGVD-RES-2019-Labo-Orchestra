@@ -63,10 +63,14 @@ function Musician(instrument) {
 }
 
 // Let's get the musician properties from the command line attributes
-if (process.argv.length < 3) {
-  throw new Error('Number of arguments is not correct');
+if (process.argv.length !== 3) {
+  throw new Error('Number of arguments is not correct. Usage : node musician.js <instrument>');
 }
-// TODO Check that specified instrument exists
+
+// Check if the specified instrument exists
+if (!(process.argv[2] in listInstruments)) {
+  throw new Error('The specified instrument does not exist');
+}
 
 const m1 = new Musician(process.argv[2]);
 
