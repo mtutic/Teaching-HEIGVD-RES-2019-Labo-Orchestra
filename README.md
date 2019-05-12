@@ -165,7 +165,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | How can we use the `Map` built-in object introduced in ECMAScript 6 to implement a **dictionary**?  |
 | | *With the following instruction we create a map: `const activeMusicians = new Map();`. Different properties and methods exist for `Map` object. More infos [here](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Objets_globaux/Map "here").* |
 |Question | How can we use the `Moment.js` npm module to help us with **date manipulations** and formatting?  |
-| | *We have to install `moment` package with `npm install --save moment` command. Then we read moment documentation [here](https://momentjs.com/docs/ "here" * |
+| | *We have to install `moment` package with `npm install --save moment` command. Then we read moment documentation [here](https://momentjs.com/docs/ "here").* |
 |Question | When and how do we **get rid of inactive players**?  |
 | | *Before sending active musicians, we check that the last time the musician has emitted a sound is less than 5 seconds.* |
 |Question | How do I implement a **simple TCP server** in Node.js?  |
